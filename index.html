@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SUPER NEXUS — Oráculo Quântico-Simbólico // Teoria do Alternatismo</title>
+  <style>
+    /* ===== VARIÁVEIS GLOBAIS (ESTÉTICA SUPER NEXUS) ===== */
+    :root {
+      --bg-void: #000105;
+      --bg-panel: rgba(2, 5, 15, 0.95);
+      --fg-quantum: #00ffcc;
+      --fg-dim: #004d40;
+      --accent-pos: #00ff88; /* Benigno */
+      --accent-neg: #ff3366; /* Maligno */
+      --accent-future: #00ccff;
+      --accent-past: #ffaa00;
+      --accent-gold: #ffcc00;
+      --glow-quantum: 0 0 25px rgba(0, 255, 204, 0.3);
+      --font-main: 'Fira Code', 'JetBrains Mono', monospace;
+    }
+
+    /* ===== RESET E BASE ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-void);
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.05) 0%, transparent 80%),
+        linear-gradient(rgba(0, 255, 204, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 50px 50px, 50px 50px;
+      color: var(--fg-quantum);
+      font-family: var(--font-main);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--fg-dim);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+    }
+
+    .brand h1 {
+      font-size: 1.8rem;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px var(--fg-quantum);
+    }
+
+    .brand span { font-size: 0.8rem; color: var(--accent-gold); letter-spacing: 4px; font-weight: bold; }
+
+    .system-metrics { display: flex; gap: 30px; font-size: 0.75rem; }
+    .metric-node { display: flex; align-items: center; gap: 12px; }
+    .pulse-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--fg-quantum); box-shadow: 0 0 15px var(--fg-quantum); animation: quantumPulse 1.5s infinite; }
+
+    @keyframes quantumPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.5; } }
+
+    /* ===== MAIN LAYOUT ===== */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 420px 1fr 450px;
+      gap: 25px;
+      padding: 25px;
+      overflow: hidden;
+    }
+
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glow-quantum);
+    }
+
+    .panel-header {
+      padding: 15px 25px;
+      background: rgba(0, 255, 204, 0.1);
+      border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--fg-quantum);
+      text-transform: uppercase;
+    }
+
+    .panel-content {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--fg-dim) transparent;
+    }
+
+    /* ===== INPUT & CONTROLS ===== */
+    .input-area { 
+      width: 100%; 
+      height: 180px; 
+      background: rgba(0, 0, 0, 0.6); 
+      border: 1px solid var(--fg-dim); 
+      color: var(--fg-quantum); 
+      padding: 20px; 
+      font-family: var(--font-main); 
+      font-size: 1rem; 
+      resize: none; 
+      margin-bottom: 25px;
+      line-height: 1.6;
+      border-radius: 8px;
+    }
+    .input-area:focus { outline: none; border-color: var(--fg-quantum); box-shadow: 0 0 20px rgba(0, 255, 204, 0.2); }
+
+    .control-section { margin-bottom: 25px; border-bottom: 1px solid rgba(0, 255, 204, 0.1); padding-bottom: 20px; }
+    .control-label { font-size: 0.8rem; color: var(--fg-dim); margin-bottom: 12px; display: block; text-transform: uppercase; letter-spacing: 2px; }
+
+    .mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+    .mode-btn {
+      padding: 12px;
+      background: transparent;
+      border: 1px solid var(--fg-dim);
+      color: var(--fg-dim);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .mode-btn.active { border-color: var(--fg-quantum); color: var(--fg-quantum); background: rgba(0, 255, 204, 0.1); box-shadow: 0 0 15px rgba(0, 255, 204, 0.2); }
+
+    .btn-launch {
+      width: 100%;
+      padding: 20px;
+      background: transparent;
+      border: 2px solid var(--fg-quantum);
+      color: var(--fg-quantum);
+      font-family: var(--font-main);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      cursor: pointer;
+      transition: all 0.5s;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .btn-launch:hover { background: var(--fg-quantum); color: var(--bg-void); box-shadow: 0 0 40px var(--fg-quantum); transform: scale(1.02); }
+
+    /* ===== ORÁCULO & VISUALIZAÇÃO ===== */
+    .quantum-display { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+    .quantum-card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0, 255, 204, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      position: relative;
+    }
+    .quantum-card.positive { border-left: 5px solid var(--accent-pos); }
+    .quantum-card.negative { border-left: 5px solid var(--accent-neg); }
+    
+    .card-label { font-size: 0.7rem; color: var(--fg-dim); text-transform: uppercase; margin-bottom: 10px; }
+    .card-value { font-size: 2rem; font-weight: bold; text-shadow: 0 0 15px currentColor; }
+
+    .matrix-table-wrapper { overflow-x: auto; border-radius: 8px; border: 1px solid rgba(0, 255, 204, 0.1); }
+    .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .matrix-table th { padding: 15px; background: rgba(0, 255, 204, 0.05); color: var(--fg-quantum); text-align: left; border-bottom: 1px solid var(--fg-dim); }
+    .matrix-table td { padding: 15px; border-bottom: 1px solid rgba(0, 255, 204, 0.05); }
+
+    /* ===== COGNITIVE OUTPUT ===== */
+    .terminal-output { font-size: 0.85rem; line-height: 1.8; }
+    .term-block { margin-bottom: 20px; padding: 15px; border-radius: 8px; background: rgba(0, 0, 0, 0.4); border-left: 4px solid var(--fg-quantum); }
+    .term-block.positive { border-color: var(--accent-pos); }
+    .term-block.negative { border-color: var(--accent-neg); }
+    .term-header { font-weight: bold; color: var(--accent-gold); margin-bottom: 10px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 15px 40px;
+      border-top: 1px solid var(--fg-dim);
+      font-size: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.9);
+      color: var(--fg-dim);
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--fg-dim); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--fg-quantum); }
+
+    @media (max-width: 1300px) {
+      main { grid-template-columns: 1fr; grid-template-rows: auto auto auto; overflow-y: auto; }
+      .panel { height: auto; min-height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <h1>SUPER NEXUS</h1>
+      <span>ORÁCULO QUÂNTICO // TEORIA DO ALTERNATISMO v4.0</span>
+    </div>
+    <div class="system-metrics">
+      <div class="metric-node"><div class="pulse-dot"></div> MEQ_CORE: ACTIVE</div>
+      <div class="metric-node"><div class="pulse-dot" style="background: var(--accent-gold); box-shadow: 0 0 15px var(--accent-gold);"></div> OBSERVER_SYNC: 100%</div>
+      <div class="metric-node" id="clock">00:00:00</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- PAINEL DE LANÇAMENTO (OBSERVADOR) -->
+    <section class="panel">
+      <div class="panel-header">
+        <span>OBSERVER_INPUT</span>
+        <span>[LANÇAMENTO]</span>
+      </div>
+      <div class="panel-content">
+        <div class="control-section">
+          <label class="control-label">Projeção de Energia (Texto/Símbolos)</label>
+          <textarea id="inputData" class="input-area" placeholder="Lance sua palavra ou frase no campo de possibilidades..."></textarea>
+        </div>
+        
+        <div class="control-section">
+          <label class="control-label">Modo de Operação do Observador</label>
+          <div class="mode-selector">
+            <button class="mode-btn active" id="modeIntencional" onclick="setMode('intencional')">Intencional (Consciente)</button>
+            <button class="mode-btn" id="modeAleatorio" onclick="setMode('aleatorio')">Aleatório (Explorador)</button>
+          </div>
+        </div>
+
+        <div class="control-section" id="intentControls">
+          <label class="control-label">Direcionamento de Fenda</label>
+          <div class="mode-selector">
+            <button class="mode-btn active" id="fendaPos" onclick="setFenda('positiva')">Fenda Positiva (+)</button>
+            <button class="mode-btn" id="fendaNeg" onclick="setFenda('negativa')">Fenda Negativa (-)</button>
+          </div>
+          <label class="control-label">Vetor de Giro (Temporalidade)</label>
+          <div class="mode-selector">
+            <button class="mode-btn active" id="giroProg" onclick="setGiro('progressivo')">Progressivo (Futuro)</button>
+            <button class="mode-btn" id="giroRetr" onclick="setGiro('retrogrado')">Retrógrado (Passado)</button>
+          </div>
+        </div>
+
+        <button id="btnLaunch" class="btn-launch">LANÇAR NO ANTEPARO</button>
+      </div>
+    </section>
+
+    <!-- PAINEL DE PROCESSAMENTO (ANTEPARO) -->
+    <section class="panel">
+      <div class="panel-header">
+        <span>ANTEPARO_QUÂNTICO</span>
+        <span id="procStatus">ESTÁTICO</span>
+      </div>
+      <div class="panel-content">
+        <div class="quantum-display">
+          <div class="quantum-card" id="cardReduced">
+            <div class="card-label">Energia Reduzida</div>
+            <div class="card-value">--</div>
+          </div>
+          <div class="quantum-card" id="cardPolarity">
+            <div class="card-label">Polaridade Final</div>
+            <div class="card-value">--</div>
+          </div>
+        </div>
+
+        <div class="panel-header" style="background: transparent; border-top: 1px solid rgba(0, 255, 204, 0.1); margin-bottom: 15px; padding: 15px 0;">
+          <span>MATRIZ_DE_TRANSMUTAÇÃO</span>
+        </div>
+        
+        <div class="matrix-table-wrapper" id="tableContainer">
+          <p style="color: var(--fg-dim); font-size: 0.9rem; text-align: center; padding: 50px;">Aguardando lançamento de energia simbólica...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAINEL DE SÍNTESE (ORÁCULO) -->
+    <section class="panel">
+      <div class="panel-header">
+        <span>ORÁCULO_ESTÁTICO</span>
+        <span>[SÍNTESE]</span>
+      </div>
+      <div class="panel-content terminal-output" id="oracleOutput">
+        <div class="term-block">
+          <div class="term-header">SISTEMA_STATUS</div>
+          Super Nexus v4.0 pronto para leitura de Manipulação de Energia Quântica (MEQ).
+        </div>
+        <div class="term-block">
+          <div class="term-header">INSTRUÇÃO</div>
+          Selecione o modo de operação e lance a palavra para estabilizar a energia no anteparo.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>QUANTUM_ENCRYPTION: ACTIVE // PROTOCOL: ALTERNATISMO_SUPER_NEXUS</div>
+    <div>© 2026 NEXUS ENERGETIC SYSTEMS // OPERADOR: CARLOS</div>
+    <div>PRECISION: ABSOLUTE (BigInt) // STATE: SYNCHRONIZED</div>
+  </footer>
+
+  <script>
+    // ========================================
+    // CONFIGURAÇÕES E ARQUÉTIPOS POLARIZADOS (MEQ)
+    // ========================================
+    const GROUPS = {
+      1: ['a','j','s'], 2: ['b','k','t'], 3: ['c','l','u'],
+      4: ['d','m','v'], 5: ['e','n','w'], 6: ['f','o','x'],
+      7: ['g','p','y'], 8: ['h','q','z'], 9: ['i','r',' ']
+    };
+
+    const ACCENT_MAP = {
+      'á':'a','à':'a','ã':'a','â':'a','ä':'a','é':'e','ê':'e','ë':'e',
+      'í':'i','ï':'i','ó':'o','ô':'o','ö':'o','ú':'u','ü':'u','ç':'c'
+    };
+
+    const POLARIZED_ARCHETYPES = {
+      1: { pos: "Início, força criadora, identidade firme.", neg: "Egoísmo, isolamento, rigidez absoluta." },
+      2: { pos: "Equilíbrio, parceria, cooperação benigna.", neg: "Dependência, conflito, dualidade destrutiva." },
+      3: { pos: "Criatividade, comunicação, expansão vital.", neg: "Dispersão, superficialidade, excesso sem ação." },
+      4: { pos: "Estrutura, ordem, estabilidade manifesta.", neg: "Estagnação, rigidez, bloqueio ao novo." },
+      5: { pos: "Liberdade, movimento, adaptação, evolução.", neg: "Instabilidade, caos, desordem, fuga constante." },
+      6: { pos: "Amor, harmonia, responsabilidade integrada.", neg: "Apego excessivo, sacrifício destrutivo, controle." },
+      7: { pos: "Busca interior, sabedoria, espiritualidade.", neg: "Isolamento, fanatismo, desconfiança profunda." },
+      8: { pos: "Poder, realização, abundância energética.", neg: "Ganância, dominação, abuso de autoridade." },
+      9: { pos: "Culminação, transcendência, consciência universal.", neg: "Perda de sentido, dissolução, vazio existencial." }
+    };
+
+    // ========================================
+    // ESTADO DO SISTEMA
+    // ========================================
+    let currentMode = 'intencional';
+    let currentFenda = 'positiva';
+    let currentGiro = 'progressivo';
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('modeIntencional').classList.toggle('active', mode === 'intencional');
+      document.getElementById('modeAleatorio').classList.toggle('active', mode === 'aleatorio');
+      document.getElementById('intentControls').style.opacity = mode === 'intencional' ? '1' : '0.3';
+      document.getElementById('intentControls').style.pointerEvents = mode === 'intencional' ? 'all' : 'none';
+    }
+
+    function setFenda(fenda) {
+      currentFenda = fenda;
+      document.getElementById('fendaPos').classList.toggle('active', fenda === 'positiva');
+      document.getElementById('fendaNeg').classList.toggle('active', fenda === 'negativa');
+    }
+
+    function setGiro(giro) {
+      currentGiro = giro;
+      document.getElementById('giroProg').classList.toggle('active', giro === 'progressivo');
+      document.getElementById('giroRetr').classList.toggle('active', giro === 'retrogrado');
+    }
+
+    // ========================================
+    // MOTOR DE CÁLCULO (PRECISÃO INFINITA)
+    // ========================================
+    const LETTER_TO_VAL = new Map();
+    for (const [val, chars] of Object.entries(GROUPS)) {
+      chars.forEach(c => LETTER_TO_VAL.set(c, Number(val)));
+    }
+
+    function normalize(text) {
+      return text.toLowerCase().split('').map(c => ACCENT_MAP[c] || c).join('');
+    }
+
+    function base9ToBigInt(digits) {
+      let res = BigInt(0);
+      const nine = BigInt(9);
+      digits.forEach(d => { res = res * nine + BigInt(d); });
+      return res;
+    }
+
+    function reduceBigInt(n) {
+      let val = n < 0n ? -n : n;
+      if (val === 0n) return 0;
+      while (val > 9n) {
+        let sum = 0n;
+        let s = val.toString();
+        for (let char of s) { sum += BigInt(char); }
+        val = sum;
+      }
+      return Number(val);
+    }
+
+    // ========================================
+    // EXECUÇÃO MEQ
+    // ========================================
+    const inputArea = document.getElementById('inputData');
+    const btnLaunch = document.getElementById('btnLaunch');
+    const tableContainer = document.getElementById('tableContainer');
+    const oracleOutput = document.getElementById('oracleOutput');
+    const procStatus = document.getElementById('procStatus');
+
+    btnLaunch.addEventListener('click', () => {
+      const raw = inputArea.value.trim();
+      if (!raw) return;
+
+      procStatus.textContent = "LANÇANDO...";
+      procStatus.style.color = "var(--accent-gold)";
+
+      // Simulação de giro e estabilização
+      setTimeout(() => {
+        processMeq(raw);
+        procStatus.textContent = "ESTABILIZADO";
+        procStatus.style.color = "var(--fg-quantum)";
+      }, 800);
+    });
+
+    function processMeq(raw) {
+      let text = normalize(raw);
+      let words = text.split(/\s+/).map(w => w.replace(/[^a-z]/g, '')).filter(w => w.length > 0);
+
+      const results = words.map(word => {
+        const symbols = word.split('').map(c => LETTER_TO_VAL.get(c)).filter(v => v !== undefined);
+        const base9 = symbols.map(v => v - 1);
+        const decimal = base9ToBigInt(base9);
+        const reduced = reduceBigInt(decimal);
+        return { word, symbols, base9, decimal, reduced };
+      });
+
+      const allBase9 = results.flatMap(r => r.base9);
+      const aggDecimal = base9ToBigInt(allBase9);
+      const aggReduced = reduceBigInt(aggDecimal);
+
+      // Determinação de Polaridade
+      let finalPolarity = currentFenda;
+      let finalGiro = currentGiro;
+
+      if (currentMode === 'aleatorio') {
+        finalPolarity = Math.random() > 0.5 ? 'positiva' : 'negativa';
+        finalGiro = Math.random() > 0.5 ? 'progressivo' : 'retrogrado';
+      }
+
+      renderMeq(results, { aggReduced, aggDecimal, allBase9, finalPolarity, finalGiro });
+      generateOracleSynthesis(aggReduced, finalPolarity, finalGiro, aggDecimal);
+    }
+
+    function renderMeq(results, agg) {
+      const cardReduced = document.getElementById('cardReduced');
+      const cardPolarity = document.getElementById('cardPolarity');
+
+      cardReduced.querySelector('.card-value').textContent = agg.aggReduced;
+      cardPolarity.querySelector('.card-value').textContent = agg.finalPolarity === 'positiva' ? '+' : '-';
+      
+      cardPolarity.style.color = agg.finalPolarity === 'positiva' ? 'var(--accent-pos)' : 'var(--accent-neg)';
+      cardPolarity.classList.toggle('positive', agg.finalPolarity === 'positiva');
+      cardPolarity.classList.toggle('negative', agg.finalPolarity === 'negativa');
+
+      let html = `<table class="matrix-table">
+        <thead>
+          <tr>
+            <th>UNIDADE</th>
+            <th>SÍMBOLOS</th>
+            <th>BASE 9</th>
+            <th>RED.</th>
+          </tr>
+        </thead>
+        <tbody>`;
+      
+      results.forEach(r => {
+        html += `<tr>
+          <td style="color:var(--fg-quantum); font-weight:bold;">${r.word.toUpperCase()}</td>
+          <td style="color:var(--accent-future)">${r.symbols.join('')}</td>
+          <td style="color:var(--accent-gold)">${r.base9.join('')}</td>
+          <td style="font-weight:bold; color:var(--fg-quantum); font-size:1.1rem;">${r.reduced}</td>
+        </tr>`;
+      });
+
+      html += `<tr style="border-top: 2px solid var(--fg-quantum); background: rgba(0,255,204,0.1)">
+          <td colspan="2" style="color:var(--fg-quantum); font-weight:bold;">AGREGADO QUÂNTICO</td>
+          <td style="color:var(--accent-gold); font-size:0.7rem;">${agg.allBase9.join('')}</td>
+          <td style="font-weight:bold; color:var(--fg-quantum); font-size:1.3rem;">${agg.aggReduced}</td>
+        </tr>`;
+
+      html += `</tbody></table>`;
+      tableContainer.innerHTML = html;
+    }
+
+    function generateOracleSynthesis(reduced, polarity, giro, decimal) {
+      const arch = POLARIZED_ARCHETYPES[reduced] || { pos: "Luz.", neg: "Sombra." };
+      const interpretation = polarity === 'positiva' ? arch.pos : arch.neg;
+      const temporalContext = giro === 'progressivo' ? "em direção ao futuro (evolução)" : "em direção ao passado (regressão)";
+      
+      let html = `
+        <div class="term-block ${polarity === 'positiva' ? 'positive' : 'negative'}">
+          <div class="term-header">SÍNTESE_DO_ORÁCULO</div>
+          A energia estabilizou-se no arquétipo <strong>${reduced}</strong> com polaridade <strong>${polarity.toUpperCase()}</strong>.
+          <br><br>
+          <strong>Manifestação:</strong> ${interpretation}
+        </div>
+        <div class="term-block">
+          <div class="term-header">VETOR_TEMPORAL</div>
+          O giro estabilizado é <strong>${giro.toUpperCase()}</strong>, indicando que esta energia se projeta ${temporalContext}.
+        </div>
+        <div class="term-block">
+          <div class="term-header">PARECER_DO_OBSERVADOR</div>
+          No modo <strong>${currentMode.toUpperCase()}</strong>, a materialização da palavra revelou uma densidade de ${decimal.toString().length} ordens de magnitude. 
+          A transmutação para o estado ${polarity === 'positiva' ? 'benigno' : 'maligno'} sugere que o campo de possibilidades 
+          foi colapsado em uma frequência de ${polarity === 'positiva' ? 'expansão harmônica' : 'contração caótica'}.
+        </div>
+      `;
+      oracleOutput.innerHTML = html;
+    }
+
+    // Clock
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString();
+    }, 1000);
+
+  </script>
+</body>
+</html>
